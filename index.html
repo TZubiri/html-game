@@ -1,10 +1,71 @@
-<!DOCTYPE html>
-<html lang="en">
+<!doctype html>
+<html>
 <head>
-    <meta charset="UTF-8">
-    <title>Top Down Shooter</title>
+    <meta charset="utf-8">
+    <title>Hello World</title>
 </head>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pixi.js/4.5.1/pixi.min.js"></script>
+<style>* {padding: 0; margin: 0}</style>
 <body>
+<script type="text/javascript">
+    let type = "WebGL"
+    if(!PIXI.utils.isWebGLSupported()){
+        type = "canvas"
+    }
 
+    //Create a Pixi Application
+    let app = new PIXI.Application({
+            width: 256,         // default: 800
+            height: 256,        // default: 600
+            antialias: true,    // default: false
+            transparent: false, // default: false
+            resolution: 1       // default: 1
+        }
+    );
+    app.renderer.autoResize = true;
+    app.renderer.view.style.position = "absolute";
+    app.renderer.view.style.display = "block";
+    app.renderer.autoResize = true;
+    app.renderer.resize(window.innerWidth, window.innerHeight);
+    //Add the canvas that Pixi automatically created for you to the HTML document
+    document.body.appendChild(app.view);
+
+
+    //Add the canvas that Pixi automatically created for you to the HTML document
+    document.body.appendChild(app.view);
+
+    //load an image and run the `setup` function when it's done
+    PIXI.loader
+        .add("img/bick.png")
+        .load(setup);
+
+    let cat;
+    //This `setup` function will run when the image has loaded
+    function setup() {
+
+        //Create the cat sprite
+        cat = new PIXI.Sprite(PIXI.loader.resources["img/bick.png"].texture);
+
+        //Add the cat to the stage
+        app.stage.addChild(cat);
+
+        app.ticker.add(delta => gameLoop(delta));
+    }
+
+    function gameLoop(delta){
+
+        //Move the cat 1 pixel
+
+        var gamepads = navigator.getGamepads();
+        if (gamepads[0]){
+            cat.x += gamepads[0]['axes'][0];
+            cat.y += gamepads[0]['axes'][1];
+        }
+
+        console.log(gamepads);
+    }
+
+</script>
 </body>
 </html>
+
